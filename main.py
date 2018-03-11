@@ -1,6 +1,9 @@
 #!/usr/bin/python3
 
+#- * -coding: utf - 8 - * -
+
 import os
+import re
 import notify2
 
 # save output of sensors in data
@@ -15,39 +18,47 @@ temp2 = list_to_parse[16]
 temp3 = list_to_parse[25]
 temp4 = list_to_parse[37]
 
-# we define max temp
+# init notifications
+notify2.init('Monitor Sensors')
+
+# parse temp func
+
+def parse_temp(temp1, temp2, temp3, temp4):
+
+	temp1 = re.findall('[^\d](?P<deg>\d+)[^\d]', temp1)
+	temp2 = re.findall('[^\d](?P<deg>\d+)[^\d]', temp2)
+	temp3 = re.findall('[^\d](?P<deg>\d+)[^\d]', temp3)
+	temp4 = re.findall('[^\d](?P<deg>\d+)[^\d]', temp4)
+
+	temp1 = int(str(temp1[0]))
+	temp2 = int(str(temp2[0]))
+	temp3 = int(str(temp3[0]))
+	temp4 = int(str(temp4[0]))
+
+	return temp1, temp2, temp3, temp4
+
+
+# max temp allowed
 max_temp = 75
 
-# TODO, before if need to convert temp to floats
+# temperatures
+temp1, temp2, temp3, temp4 = parse_temp(temp1, temp2, temp3, temp4)
 
-if max_temp > int(temp1) or max_temp > int(temp2) or max_temp > int(
-        temp3) or max_temp > int(temp4):
-    print("WARNING!")
+# define function to check temp
+def check_temp(max_temp, temp1, temp2, temp3, temp4):
 
-# init notifications
-notify2.init('app name')
-
-# create notification
-n = notify2.Notification("Summary", data, "notification-message-im")
-
-#for i in list_to_parse:
-#    print("This is an item {}".format(i))
-
-counter = 0
-
-#for i in list_to_parse:
-#    print(counter,i)
-#    counter = counter + 1
-
-print(list_to_parse[7])
-print(list_to_parse[16])
-print(list_to_parse[25])
-print(list_to_parse[37])
-print(data)
+	# compare the sensors temp with the max temp, this can be done better with a list.
+    if max_temp < temp1 or max_temp < temp2 or max_temp < temp3 or max_temp < temp4:
+        n = notify2.Notification("Summary", data, "notification-message-im")
+        n.show()
+        print("WARNING!", max(temp1, temp2, temp3, temp4))
+        print("The max temperature that is allowed {}".format(max_temp))
+    else:
+        print("well nothing")
 
 
 def main():
-    n.show()
+    check_temp(max_temp, temp1, temp2, temp3, temp4)
 
 
 if __name__ == '__main__':
