@@ -1,11 +1,17 @@
 #!/usr/bin/python3
-
 #- * -coding: utf - 8 - * -
 
 import os
-import re
-import notify2
+import re	
 
+try:
+	import notify2
+except ImportError:
+	raise ImportError("run pip3 install notify2")
+
+notify2.init('Monitor Sensors')
+
+#def read_sensor_data():
 # save output of sensors in data
 data = os.popen('sensors').read()
 
@@ -13,13 +19,24 @@ data = os.popen('sensors').read()
 list_to_parse = data.split()
 
 # save each temp in its variable
+sensors_temp = []	
+count = 0
+print(sensors_temp)
+# for sensor in list_to_parse:
+	# sensors_temp.append(sensor[7])		
+	# # sensors_temp.append(sensor[16])		
+	# sensors_temp.append(sensor[25])		
+	# sensors_temp.append(sensor[37])		
+
+
+
+print("This comes from the list {}".format(sensors_temp))
 temp1 = list_to_parse[7]
 temp2 = list_to_parse[16]
 temp3 = list_to_parse[25]
 temp4 = list_to_parse[37]
 
-# init notifications
-notify2.init('Monitor Sensors')
+	# init notifications
 
 # parse temp func
 
