@@ -2,7 +2,7 @@
 #- * -coding: utf - 8 - * -
 
 import os
-import re	
+import re
 
 try:
 	import notify2
@@ -19,18 +19,18 @@ data = os.popen('sensors').read()
 list_to_parse = data.split()
 
 # save each temp in its variable
-sensors_temp = []	
-count = 0
-print(sensors_temp)
+# sensors_temp = []
+# count = 0
+# print(sensors_temp)
 # for sensor in list_to_parse:
-	# sensors_temp.append(sensor[7])		
-	# # sensors_temp.append(sensor[16])		
-	# sensors_temp.append(sensor[25])		
-	# sensors_temp.append(sensor[37])		
+	# sensors_temp.append(sensor[7])
+	# # sensors_temp.append(sensor[16])
+	# sensors_temp.append(sensor[25])
+	# sensors_temp.append(sensor[37])
 
 
 
-print("This comes from the list {}".format(sensors_temp))
+# print("This comes from the list {}".format(sensors_temp))
 temp1 = list_to_parse[7]
 temp2 = list_to_parse[16]
 temp3 = list_to_parse[25]
